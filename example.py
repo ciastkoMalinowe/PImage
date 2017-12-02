@@ -3,7 +3,30 @@ import cv2
 
 scale = 4
 
-#swaps 2 rectangles with faces
+def paste_ellipse(destination, source, h, w):
+    ellipse = np.zeros((h,w,3))
+    cv2.ellipse(ellipse, (h / 2, w / 2), (h / 4 + h / 8, w / 2), 0, 0, 360, (0, 255, 0) ,-1)
+    for i in range(h):
+        for j in range(w):
+            if(ellipse[i, j, 1] != 0):
+                destination[i, j] = source[i, j]
+
+
+#TODO: change fixed border width to sth not fixed
+def blur_border(image, h, w) :
+    blurred = cv2.blur(image, (7,7))
+    ellipse = np.zeros((h, w, 3))
+    cv2.ellipse(ellipse, (h / 2, w / 2), (h /4 + h/8, w / 2), 0, 0, 360, (0, 255, 0),
+             20,1)
+    for i in range(h):
+        for j in range(w):
+            if (ellipse[i, j, 1] != 0):
+                if image.shape[0] > i and image.shape[1] > j:
+                    image[i, j] = blurred[i, j]
+
+
+#TODO: change fixed resize 10 to sth not fixed
+#swaps 2 ellipses from rectangles with faces
 def swap_2_faces(faces, frame):
     x,y,w,h = faces[0]
     x1,y1,w1,h1 = faces[1]
@@ -13,7 +36,12 @@ def swap_2_faces(faces, frame):
     face1 = frame[y1:y1+h1, x1:x1+w1]
     face = cv2.resize(face, (w1, h1))
     face1 = cv2.resize(face1, (w, h))
-    frame[y1:y1+h1, x1:x1+w1], frame[y:y+h, x:x+w] = face, face1
+    new_x, new_y = max(0, x1-10), max(0, y1-10)
+    paste_ellipse(frame[y1:y1+h1, x1:x1+w1], face, h1, w1)
+    blur_border(frame[new_y:new_y+h1+20, new_x:new_x+w1+20], h1+20, w1+20)
+    paste_ellipse(frame[y:y + h, x:x + w],  face1, h, w)
+    new_x, new_y = max(0, x - 10), max(0, y - 10)
+    blur_border(frame[new_y:new_y + h+20, new_x:new_x + w+20], h+20, w+20)
 
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 
