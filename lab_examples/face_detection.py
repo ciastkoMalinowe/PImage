@@ -19,11 +19,11 @@ while(True):
     gray = cv2.cvtColor(small_frame, cv2.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, 1.1, 5)
     for(x,y,w,h) in faces:
-        cv2.rectangle(frame, (x*10,y*10), (w*10+x*10, y*10+h*10), (255, 255, 0), 2)
+        #cv2.rectangle(frame, (x*10,y*10), (w*10+x*10, y*10+h*10), (255, 255, 0), 2)
         #cv2.rectangle(small_frame, (x,y), (w+x, y+h), (255, 255, 0), 2)
-        small_cat = cv2.resize(cat, (0,0), fx=(w*10/cat.shape[0]), fy=(h*10/cat.shape[1]))
+        small_cat = cv2.resize(cat, (0,0), fx=(w*10.0/cat.shape[0]), fy=(h*10.0/cat.shape[1]))
         frame[y*10:y*10+small_cat.shape[0], x*10:x*10+small_cat.shape[1]] = small_cat
-    #cv2.imshow('CAT', small_cat)
+    cv2.imshow('CAT', small_cat)
     cv2.imshow('FACES',frame)
     cv2.namedWindow('FACES', cv2.WINDOW_NORMAL)
     #cv2.imshow('SMALL_FACES',small_frame)
