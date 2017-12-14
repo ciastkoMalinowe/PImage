@@ -1,12 +1,6 @@
 import cv2
 import sys
 
-(major_ver, minor_ver, subminor_ver) = (cv2.__version__).split('.')￼
-
-if __name__ == '__main__' :
-
-    # Set up tracker.
-    # Instead of MIL, you can also use
 
     tracker_types = ['BOOSTING', 'MIL','KCF', 'TLD', 'MEDIANFLOW', 'GOTURN']
     tracker_type = tracker_types[2]
