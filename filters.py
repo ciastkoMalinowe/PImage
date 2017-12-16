@@ -11,7 +11,7 @@ excess_edges = np.array([[1,1,1],[1,-7,1],[1,1,1]])
 gauss = np.array([[1, 1, 2, 1, 1], [1, 2, 4, 2, 1], [2, 4, 8, 4, 2], [1, 2, 4, 2, 1], [1, 1, 2, 1, 1]], np.float32) / 52
 
 def apply(frame, filter):
-    return cv2.filter2D(frame, -1, filter)
+    return cv2.filter2D(frame, -1, excess_edges)
 
 video = cv2.VideoCapture(0)
 
