@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 
 cap = cv2.VideoCapture(0)
-face_cascade = cv2.CascadeClassifier('/usr/share/opencv/haarcascades/haarcascade_frontalface_alt.xml')
+face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 cat = cv2.imread('cat.png', -1)
 mask = cv2.imread('cat.png', 0)
 small_cat = cv2.add(np.zeros((cat.shape[0],cat.shape[1],3), np.uint8), cat, mask=mask)
