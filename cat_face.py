@@ -1,4 +1,4 @@
-from scipy import misc
+#from scipy import misc
 import numpy as np
 import cv2
 
@@ -40,7 +40,7 @@ def print_with_mask(destination, x, y, w, h, image, mask):
 def cat_face():
     scale = 8.
     video = cv2.VideoCapture(0)
-    face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+    face_cascade = cv2.CascadeClassifier('/usr/share/opencv/haarcascades/haarcascade_frontalface_alt.xml')
     cat = cv2.imread('cat.png')
     mask = create_mask('cat.png')
 

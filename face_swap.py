@@ -151,7 +151,7 @@ def swap_2_faces(faces, frame, mask, blur_mask):
 
 
 scale = 8
-face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+face_cascade = cv2.CascadeClassifier('/usr/share/opencv/haarcascades/haarcascade_frontalface_alt.xml')
 maskA = create_ellipse_mask()
 blur_mask = create_blur_mask()
 video = cv2.VideoCapture(0)
