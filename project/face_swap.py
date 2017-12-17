@@ -149,41 +149,41 @@ def swap_2_faces(faces, frame, mask, blur_mask):
 
     return frame
 
+def run_swap():
+    scale = 8
+    face_cascade = cv2.CascadeClassifier('/usr/share/opencv/haarcascades/haarcascade_frontalface_alt.xml')
+    maskA = create_ellipse_mask()
+    blur_mask = create_blur_mask()
+    video = cv2.VideoCapture(0)
+    while(True):
 
-scale = 8
-face_cascade = cv2.CascadeClassifier('/usr/share/opencv/haarcascades/haarcascade_frontalface_alt.xml')
-maskA = create_ellipse_mask()
-blur_mask = create_blur_mask()
-video = cv2.VideoCapture(0)
-while(True):
+        ret, frame = video.read()
+        small = cv2.resize(frame, (640/scale,480/scale))
+        small = cv2.cvtColor(small, cv2.COLOR_BGR2GRAY)
+        faces = face_cascade.detectMultiScale(
+            small,
+            scaleFactor=1.1,
+            minNeighbors=5,
+            minSize=(10, 10),
+            flags=cv2.cv.CV_HAAR_SCALE_IMAGE
+        )
 
-    ret, frame = video.read()
-    small = cv2.resize(frame, (640/scale,480/scale))
-    small = cv2.cvtColor(small, cv2.COLOR_BGR2GRAY)
-    faces = face_cascade.detectMultiScale(
-        small,
-        scaleFactor=1.1,
-        minNeighbors=5,
-        minSize=(10, 10),
-        flags=cv2.cv.CV_HAAR_SCALE_IMAGE
-    )
+        if len(faces) > 1:
+            frame = swap_2_faces(faces, frame, maskA, blur_mask)
 
-    if len(faces) > 1:
-        frame = swap_2_faces(faces, frame, maskA, blur_mask)
+        else:
+            for (x, y, w, h) in faces:
+                x, y, w, h = \
+                    x * scale, y * scale, w * scale, h * scale
+                blur_width = 32
+                cv2.ellipse(frame, (x+w/2, y+h/2),(w/4 + w/8, h/2),0,0,360,(0, 255, 0),1)
+                frame[y - h / blur_width:y + h + h / blur_width, x - w / blur_width:x + w + w / blur_width] = \
+                    blur_edge(frame[max(y - h/blur_width,0) : min(y + h + h/blur_width, frame.shape[0]),
+                              max(x - w/blur_width, 0): min(x + w + w/blur_width, frame.shape[1])], blur_mask)
 
-    else:
-        for (x, y, w, h) in faces:
-            x, y, w, h = \
-                x * scale, y * scale, w * scale, h * scale
-            blur_width = 32
-            cv2.ellipse(frame, (x+w/2, y+h/2),(w/4 + w/8, h/2),0,0,360,(0, 255, 0),1)
-            frame[y - h / blur_width:y + h + h / blur_width, x - w / blur_width:x + w + w / blur_width] = \
-                blur_edge(frame[max(y - h/blur_width,0) : min(y + h + h/blur_width, frame.shape[0]),
-                          max(x - w/blur_width, 0): min(x + w + w/blur_width, frame.shape[1])], blur_mask)
+        cv2.imshow('faces', frame)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
 
-    cv2.imshow('faces', frame)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-video.release()
-cv2.destroyAllWindows()
+    video.release()
+    cv2.destroyAllWindows()

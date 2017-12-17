@@ -37,7 +37,7 @@ def print_with_mask(destination, x, y, w, h, image, mask):
     return destination
 
 
-def cat_face():
+def run_cat_face():
     scale = 8.
     video = cv2.VideoCapture(0)
     face_cascade = cv2.CascadeClassifier('/usr/share/opencv/haarcascades/haarcascade_frontalface_alt.xml')
@@ -59,5 +59,3 @@ def cat_face():
 
     video.release()
     cv2.destroyAllWindows()
-
-cat_face()
