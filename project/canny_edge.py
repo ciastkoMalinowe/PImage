@@ -10,7 +10,7 @@ def run_canny_edge():
         edges = cv2.Canny(frame,100,200)
 
         cv2.imshow('EDGES',edges)
-        cv2.imshow('TEST',frame)
+        #cv2.imshow('TEST',frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 

@@ -11,7 +11,7 @@ def run_negative():
         negative = cv2.bitwise_not(frame)
 
         cv2.imshow('negative',negative)
-        cv2.imshow('TEST',frame)
+        #cv2.imshow('TEST',frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 

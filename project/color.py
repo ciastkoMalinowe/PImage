@@ -17,13 +17,10 @@ def run_color(effect):
 
         # color = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
         # color = cv2.cvtColor(frame, cv2.COLOR_LUV2BGR)
-        # COLOR_RGB2YUV
-        # COLOR_RGB2LAB - lightness
-        # HLS
         color = cv2.applyColorMap(frame, EFFECT[effect])
 
-        cv2.imshow('frame', frame)
-        cv2.imshow('blue', color)
+        #cv2.imshow('frame', frame)
+        cv2.imshow('color', color)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
