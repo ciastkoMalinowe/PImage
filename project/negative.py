@@ -1,20 +1,9 @@
-import numpy as np
 import cv2
 
 
-def run_negative():
-    cap = cv2.VideoCapture(0)
+def prepare():
+    pass
 
-    while(True):
-        ret, frame = cap.read()
+def run(frame):
 
-        negative = cv2.bitwise_not(frame)
-
-        cv2.imshow('negative',negative)
-        #cv2.imshow('TEST',frame)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-
-    cap.release()
-    cv2.destroyAllWindows()
-
+    return cv2.bitwise_not(frame)

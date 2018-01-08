@@ -2,19 +2,10 @@ import numpy as np
 import cv2
 
 
-def run_gaussian_blur():
-    cap = cv2.VideoCapture(0)
+def prepare():
+    pass
 
-    while(True):
-        ret, frame = cap.read()
+def run(frame):
 
-        kernel = np.ones((5,5),np.float32)/25
-        dst = cv2.filter2D(frame,-1,kernel)
-
-        cv2.imshow('BLUR',dst)
-        cv2.imshow('TEST',frame)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-
-    cap.release()
-    cv2.destroyAllWindows()
+    kernel = np.ones((5,5),np.float32)/25
+    return cv2.filter2D(frame,-1,kernel)
