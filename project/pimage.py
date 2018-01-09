@@ -1,14 +1,14 @@
 import argparse
 
-from project.face_swap import run_swap
-from project.canny_edge import run_canny_edge
-from project.gaussian_blur import run_gaussian_blur
+from project.face_swap.py import run_swap
+from project.canny_edge.py import run_canny_edge
+from project.gaussian_blur.py import run_gaussian_blur
 from project.cat_face import run_cat_face
 from project.negative import run_negative
 from project.color import run_color
 
-FILTERS = {'canny_edge' : run_canny_edge(),
-           'blur' : run_gaussian_blur(),
+FILTERS = {'canny_edge': run_canny_edge(),
+           'blur': run_gaussian_blur(),
            'face_swap': run_swap(),
            'cat_face': run_cat_face(),
            'negative': run_negative(),
