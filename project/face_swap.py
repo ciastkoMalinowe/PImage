@@ -76,7 +76,7 @@ while(True):
 video.release()
 cv2.destroyAllWindows()
 """
-scale = 8
+
 
 def create_ellipse_mask():
     h = 256

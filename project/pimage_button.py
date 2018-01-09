@@ -18,10 +18,10 @@ def run_filters(queue):
     iter = 0
     FUNC[iter].prepare()
     cap = cv2.VideoCapture(0)
-    print('new process')
+    first = True
     while True:
-
-        if not queue.empty():
+            
+        if not queue.empty() and not first:
             message = queue.get()
             if message == 'quit':
                 cap.release()
@@ -30,6 +30,9 @@ def run_filters(queue):
 
             iter += message
             FUNC[iter].prepare()
+            
+        if not queue.empty() and first:
+            first = False
 
         ret, frame = cap.read()
         cv2.imshow('FILTERS', FUNC[iter].run(frame))
