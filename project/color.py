@@ -7,22 +7,15 @@ EFFECT = {'spring': cv2.COLORMAP_SPRING,
           'summer': cv2.COLORMAP_SUMMER,
           'rainbow': cv2.COLORMAP_RAINBOW,
           }
+effect = None
 
 
-def run_color(effect):
-    cap = cv2.VideoCapture(0)
+def prepare(e):
 
-    while (True):
-        ret, frame = cap.read()
+    global effect
+    effect = e
 
-        # color = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
-        # color = cv2.cvtColor(frame, cv2.COLOR_LUV2BGR)
-        color = cv2.applyColorMap(frame, EFFECT[effect])
 
-        #cv2.imshow('frame', frame)
-        cv2.imshow('color', color)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+def run(frame):
 
-    cap.release()
-    cv2.destroyAllWindows()
+    return cv2.applyColorMap(frame, EFFECT[effect])

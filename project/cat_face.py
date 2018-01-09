@@ -36,26 +36,26 @@ def print_with_mask(destination, x, y, w, h, image, mask):
     destination[y:y + W, x:x + H] = cv2.bitwise_or(fg, bk)
     return destination
 
+scale = None
+face_cascade = None
+cat = None
+mask = None
 
-def run_cat_face():
+
+def prepare():
+
+    global scale, face_cascade, cat, mask
     scale = 8.
-    video = cv2.VideoCapture(0)
     face_cascade = cv2.CascadeClassifier('/usr/share/opencv/haarcascades/haarcascade_frontalface_alt.xml')
     cat = cv2.imread('cat.png')
     mask = create_mask('cat.png')
 
-    while (True):
-        ret, frame = video.read()
-        faces = detect_face(frame, face_cascade, scale)
 
-        for (x, y, w, h) in faces:
-            x, y, w, h = x*scale, y*scale, w*scale, h*scale
-            frame = print_with_mask(frame, x, y, w, h,cat,mask)
+def run(frame):
 
-        cv2.imshow('MIAU!', frame)
-        cv2.namedWindow('MIAU!', cv2.WINDOW_NORMAL)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+    faces = detect_face(frame, face_cascade, scale)
 
-    video.release()
-    cv2.destroyAllWindows()
+    for (x, y, w, h) in faces:
+        x, y, w, h = x*scale, y*scale, w*scale, h*scale
+        frame = print_with_mask(frame, x, y, w, h,cat,mask)
+    return frame
