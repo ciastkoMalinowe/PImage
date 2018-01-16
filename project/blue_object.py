@@ -20,3 +20,5 @@ def run(frame):
         
     return cv2.bitwise_and(frame, frame, mask=mask)
 
+prepare()
+

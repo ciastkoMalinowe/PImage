@@ -59,3 +59,5 @@ def run(frame):
         x, y, w, h = x*scale, y*scale, w*scale, h*scale
         frame = print_with_mask(frame, x, y, w, h,cat,mask)
     return frame
+
+prepare()

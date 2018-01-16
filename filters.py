@@ -18,7 +18,7 @@ video = cv2.VideoCapture(0)
 while(True):
 
     ret, frame = video.read()
-    frame = apply(frame, laplace)
+    frame = apply(frame, vertical_edges)
 
     cv2.imshow('faces', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):

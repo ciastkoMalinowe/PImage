@@ -190,3 +190,5 @@ def run(frame):
                           max(x - w/blur_width, 0): min(x + w + w/blur_width, frame.shape[1])], blur_mask)
 
     return frame
+
+prepare()
