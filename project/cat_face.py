@@ -47,8 +47,8 @@ def prepare():
     global scale, face_cascade, cat, mask
     scale = 8.
     face_cascade = cv2.CascadeClassifier('/usr/share/opencv/haarcascades/haarcascade_frontalface_alt.xml')
-    cat = cv2.imread('cat.png')
-    mask = create_mask('cat.png')
+    cat = cv2.imread('/home/pi/PImage/project/cat.png')
+    mask = create_mask('/home/pi/PImage/project/cat.png')
 
 
 def run(frame):

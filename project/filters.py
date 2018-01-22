@@ -10,19 +10,5 @@ sharpen = np.array([[-1,-1,-1],[-1,9,-1],[-1,-1,-1]])
 excess_edges = np.array([[1,1,1],[1,-7,1],[1,1,1]])
 gauss = np.array([[1, 1, 2, 1, 1], [1, 2, 4, 2, 1], [2, 4, 8, 4, 2], [1, 2, 4, 2, 1], [1, 1, 2, 1, 1]], np.float32) / 52
 
-def apply(frame, filter):
-    return cv2.filter2D(frame, -1, excess_edges)
-
-video = cv2.VideoCapture(0)
-
-while(True):
-
-    ret, frame = video.read()
-    frame = apply(frame, vertical_edges)
-
-    cv2.imshow('faces', frame)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-video.release()
-cv2.destroyAllWindows()
+def apply(frame, filters):
+    return cv2.filter2D(frame, -1, filters)

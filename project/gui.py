@@ -11,21 +11,40 @@ import face_swap
 import cat_face
 import negative
 import blue_object
+import spring
+import summer
+import winter
+import autumn
+import rainbow
+import laplace
+import sharpen_edges
+import excessed_edges
 
 
-FUNC = [canny_edge, gaussian_blur, face_swap, cat_face, negative, blue_object]
+FUNC = [canny_edge, gaussian_blur, face_swap, cat_face, negative, blue_object,
+		spring, summer, winter, autumn, rainbow, laplace, sharpen_edges, excessed_edges]
 
-DESCRIPTION = [' EDGE DETECTION ',
-               ' GAUSSIAN_BLUR  ',
-               '   SWAP FACES   ',
-               '    CAT FACE    ',
-               '    NEGATIVE    ',
-               '   BLUE OBJECT  ']
+DESCRIPTION = ['  EDGE DETECTION  ',
+               '  GAUSSIAN_BLUR   ',
+               '    SWAP FACES    ',
+               '     CAT FACE     ',
+               '     NEGATIVE     ',
+               '    BLUE OBJECT   ',
+               ' SPRING COLORMAP  ',
+               ' SUMMER COLORMAP  ',
+               ' WINTER COLORMAP  ',
+               ' AUTUMN COLORMAP  ',
+               ' RAINBOW COLORMAP ',
+               '  LAPLACE FILTER  ',
+               '  SHARPEN FILTER  ',
+               'EXCESS EDGE FILTER']
 ITER = 0
 iter = 0
+term = False
+t = None
 
 def display():
-    global video
+    global video, iter
     
     cap = cv2.VideoCapture(0)
     while(True):
@@ -38,6 +57,11 @@ def display():
         video.configure(image=frame)
         video.image = frame
         
+        if term:
+            cv2.release()
+            break;
+
+        
 def display_descriptions():
     global leftLabel, centerLabel, rightLabel
     
@@ -46,6 +70,23 @@ def display_descriptions():
     centerLabel.configure(text = DESCRIPTION[iter])
     rightLabel.configure(text = DESCRIPTION[(iter + 1) % n])
     
+def key(x):
+    x = x.char
+    if(x == 'a'):
+        left()
+    if(x == 's'):
+        enter()
+    if(x == 'd'):
+        right()
+    if(x == 'q'):
+        terminate()
+        
+def terminate():
+    global term, t
+    term = True
+    t.join()
+    window.master.distroy()
+    window.quit()
 
 def left():
     global iter
@@ -71,6 +112,7 @@ def gpio_enter(x):
     enter()
 
 def play():
+    global t
     t = threading.Thread(target=display, args=())
     t.start()
 
@@ -85,11 +127,15 @@ def initGPIO():
     
 
 window = Tk()
+window.bind('<Key>', key)
 
 buttons = Frame(window)
-Button(window, text='<-', command=left).pack(side='left')
-Button(window, text='ENTER', command=enter).pack(side='left')
-Button(window, text='->', command=right).pack(side='left')
+b1 = Button(window, text='<-', command=left)
+b1.pack(side='left')
+b2 = Button(window, text='ENTER', command=enter)
+b2.pack(side='left')
+b3 = Button(window, text='->', command=right)
+b3.pack(side='left')
 buttons.pack(side='top', pady=20)
 
 descriptions = Frame(window)
