@@ -4,6 +4,7 @@ from PIL import ImageTk
 import threading
 import cv2
 import RPi.GPIO as GPIO
+from subprocess import call
 
 import canny_edge
 import gaussian_blur
@@ -75,10 +76,16 @@ def key(x):
         right()
     if(x == 'q'):
         terminate()
+    if(x == 'e'):
+	shutdown()
         
 def terminate():
     global window
     window.quit()
+
+def shutdown():
+    call("sudo shutdown -h now", shell=True)
+
 
 def left():
     global iter
