@@ -40,8 +40,7 @@ DESCRIPTION = ['  EDGE DETECTION  ',
                'EXCESS EDGE FILTER']
 ITER = 0
 iter = 0
-term = False
-t = None
+
 
 def display():
     global video, iter
@@ -56,10 +55,6 @@ def display():
         
         video.configure(image=frame)
         video.image = frame
-        
-        if term:
-            cv2.release()
-            break;
 
         
 def display_descriptions():
@@ -82,10 +77,7 @@ def key(x):
         terminate()
         
 def terminate():
-    global term, t
-    term = True
-    t.join()
-    window.master.distroy()
+    global window
     window.quit()
 
 def left():
@@ -112,8 +104,8 @@ def gpio_enter(x):
     enter()
 
 def play():
-    global t
     t = threading.Thread(target=display, args=())
+    t.daemon = True
     t.start()
 
 def initGPIO():
@@ -130,22 +122,22 @@ window = Tk()
 window.bind('<Key>', key)
 
 buttons = Frame(window)
+buttons.pack()
 b1 = Button(window, text='<-', command=left)
 b1.pack(side='left')
 b2 = Button(window, text='ENTER', command=enter)
 b2.pack(side='left')
 b3 = Button(window, text='->', command=right)
 b3.pack(side='left')
-buttons.pack(side='top', pady=20)
 
 descriptions = Frame(window)
+descriptions.pack(pady=20)
 leftLabel = Label(descriptions, font=('Helvetica', 12))
 leftLabel.pack(side='left')
 centerLabel = Label(descriptions, font=('Helvetica', 20), bg='grey')
 centerLabel.pack(side='left')
 rightLabel = Label(descriptions, font=('Helvetica', 12))
 rightLabel.pack(side='left')
-descriptions.pack(pady=20)
 
 video = Label(window)
 video.pack(padx=10, pady=10)
